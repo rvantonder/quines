@@ -1,0 +1,12 @@
+Instructions for the biquine:
+
+python biquine.py > a.out
+diff biquine.py a.out
+(nothing)
+python biquine.py <magic word> > biquine.pl
+perl biquine.pl > b.out
+diff biquine.pl b.out
+(nothing)
+perl biquine.pl <magic word> > original_biquine.py
+diff biquine original_biquine
+(nothing)
