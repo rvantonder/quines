@@ -1,3 +1,5 @@
+/* Credits: David Madore */
+
 /* See comments below */
 
 const unsigned char c_data[] = {
