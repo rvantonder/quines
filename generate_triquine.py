@@ -68,7 +68,7 @@ if (defined($ARGV[0]) && $ARGV[0] eq "py"){
 }"""
 
 fsharp_src = """let z s i (l:array<int>) e = printf s; Array.iter (printf i) l.[0..l.Length-2]; printf "%d" l.[l.Length-1]; printf e
-let p s i l e = printf s; Array.iter (printf i) l; printf e
+let p s i l e = printf s; [for i in l -> if i < 16 then printf "0%x" i else printf "%x" i] |> ignore; printf e
 let s = function
 | "py" -> z "p=[" "%d, " py "]\\n"; z "c=[" "%d, " pl "]\\n"; z "f=[" "%d, " fs "]\\n"; printfn "%s" <| new string(Array.map char py)
 | "pl" -> p "$p=\\\"" "%x" py "\\\";\\n"; p "$c=\\\"" "%x" pl "\\\";\\n"; p "$f=\\\"" "%x" fs "\\\";\\n"; printfn "%s" <| new string(Array.map char pl)
