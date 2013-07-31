@@ -33,3 +33,34 @@ fsharpi oracle.fsx py > oracle.py
 python oracle.py > a.py
 echo "python from fsharp against itself:"
 diff oracle.py a.py
+
+python oracle.py ls > oracle.lsp
+newlisp oracle.lsp > a.lsp
+echo "newlisp from python against itself:"
+diff oracle.lsp a.lsp
+
+perl oracle.pl ls > oracle.lsp
+newlisp oracle.lsp > a.lsp
+echo "newlisp from perl against itself"
+diff oracle.lsp a.lsp
+
+fsharpi oracle.fsx ls > oracle.lsp
+newlisp oracle.lsp > a.lsp
+echo "newlisp from fsharp against itself"
+diff oracle.lsp a.lsp
+
+newlisp oracle.lsp py > oracle.py
+python oracle.py > a.py
+echo "python from newlisp against itself"
+diff oracle.py a.py
+
+newlisp oracle.lsp pl > oracle.pl
+perl oracle.pl > a.pl
+echo "perl from newlisp against itself"
+diff oracle.pl a.pl
+
+newlisp oracle.lsp fs > oracle.fsx
+fsharpi oracle.fsx > a.fsx
+echo "fsharp from newlisp against itself"
+diff oracle.fsx a.fsx
+
