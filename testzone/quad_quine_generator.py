@@ -15,13 +15,11 @@ python_src = """import sys
 def t1(i): return ''.join(map(lambda x: hex(x)[2:] if x > 15 else hex(x)[2:].zfill(2), i))+"\\\";"
 def t2(i): return (lambda x: "%s%s%s%s%s" % (x[0], "|", x[1:len(x)-1], "; |", x[-1]))(str(i).replace(',',';'))
 def t3(i): return ' '.join(map(str, i))
-def t4(i,j): print "char %s[]={%s,};" % (i,','.join(map(lambda x: "0x%0.2x" % x, j)))
 def py(): print "p="+str(p);print "c="+str(c);print "f="+str(f);print "l="+str(l);print ''.join([chr(x) for x in p])
 def pl(): print "$p=\\\""+t1(p);print "$c=\\\""+t1(c);print "$f=\\\""+t1(f);print "$l=\\\""+t1(l);print ''.join([chr(x) for x in c])
 def fs(): print "let pl = "+t2(c);print "let py = "+t2(p);print "let fs = "+t2(f); print "let ls = "+t2(l);print ''.join([chr(x) for x in f])
 def ls(): print "(set 'p '(%s))" % t3(p);print "(set 'c '(%s))" % t3(c);print "(set 'f '(%s))" % t3(f);print "(set 'l '(%s))" % t3(l);print ''.join([chr(x) for x in l])
-def cc(): t4("p", p); t4("c", c); t4("f", f); t4("l", l); t4("s", s);print ''.join([chr(x) for x in s])
-q = pl if len(sys.argv) > 1 and sys.argv[1] == 'pl' else fs if len(sys.argv) > 1 and sys.argv[1] == 'fs' else ls if len(sys.argv) > 1 and sys.argv[1] == 'ls' else cc if len(sys.argv) > 1 and sys.argv[1] == 'cc' else py
+q = pl if len(sys.argv) > 1 and sys.argv[1] == 'pl' else fs if len(sys.argv) > 1 and sys.argv[1] == 'fs' else ls if len(sys.argv) > 1 and sys.argv[1] == 'ls' else py
 q()"""
 
 perl_src = """sub t1{unpack("C*",pack("H*",$_[0]));}
@@ -96,44 +94,9 @@ newlisp_src = """(set 'x (main-args 2))
               (println (join (map char f) ""))))
 (exit)"""
 
-#braces needed? spacing? macro for loop?
-c_src = """#include <stdio.h>
-#include <string.h>
-#define M(z) printf("char " #z "[]={");for(i=0;i<sizeof(z);i++) {printf("%0#4x,", z[i]);}; printf("};\\n")
-#define N(z) for(i=0;i<sizeof(z);i++) {putchar(z[i]);}; printf("\\n")
-#define O(z) printf(#z "=[");for(i=0;i<sizeof(z)-1;i++) {printf("%d, ", z[i]);} printf("%d", z[i]); printf("]\\n")
-#define P(z) printf("$" #z "=\\\"");for(i=0;i<sizeof(z);i++) {printf("%02x",z[i]);}; printf("\\\";\\n") 
-void cc() {
-  int i;
-  M(p); M(c); M(f); M(l); M(s); N(s);
-}
-void py() {
-  int i;
-  O(p); O(c); O(f); O(l); O(s); N(p);
-}
-void pl() {
-  int i;
-  P(p); P(c); P(f); P(l); P(s); N(c);
-}
-void fs(){}
-void ls(){}
-int main (int argc, char *argv[]) {
-if (argc >= 2 && strcmp(argv[1],"py") == 0) {
-  py();
-} else if (argc >= 2 && strcmp(argv[1],"pl") == 0) {
-  pl();
-} else if (argc >= 2 && strcmp(argv[1],"fs")==0) {
-  fs();
-} else if (argc >= 2 && strcmp(argv[1],"ls") == 0) {
-  ls();
-} else {
-  cc();
-}}"""
-
 
 print "p=" + str([ord(x) for x in python_src])
 print "c=" + str([ord(x) for x in perl_src])
 print "f=" + str([ord(x) for x in fsharp_src])
 print "l=" + str([ord(x) for x in newlisp_src])
-print "s=" + str([ord(x) for x in c_src])
 print python_src

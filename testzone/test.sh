@@ -1,4 +1,5 @@
-python dev.py > oracle.py
+#python dev.py > oracle.py
+python quad_quine_generator.py > oracle.py
 
 python oracle.py > a.py
 echo "python from triquine against itself:"
