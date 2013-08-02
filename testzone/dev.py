@@ -97,12 +97,15 @@ newlisp_src = """(set 'x (main-args 2))
 (exit)"""
 
 #braces needed? spacing? macro for loop?
+# change variable names of fsharp?
 c_src = """#include <stdio.h>
 #include <string.h>
 #define M(z) printf("char " #z "[]={");for(i=0;i<sizeof(z);i++) {printf("%0#4x,", z[i]);}; printf("};\\n")
 #define N(z) for(i=0;i<sizeof(z);i++) {putchar(z[i]);}; printf("\\n")
-#define O(z) printf(#z "=[");for(i=0;i<sizeof(z)-1;i++) {printf("%d, ", z[i]);} printf("%d", z[i]); printf("]\\n")
+#define O(z) printf(#z "=[");for(i=0;i<sizeof(z)-1;i++) {printf("%d, ", z[i]);}; printf("%d]\\n", z[i])
 #define P(z) printf("$" #z "=\\\"");for(i=0;i<sizeof(z);i++) {printf("%02x",z[i]);}; printf("\\\";\\n") 
+#define Q(y, z) printf("let " y " = [|");for(i=0;i<sizeof(z);i++) {printf("%d; ", z[i]);}; printf("|]\\n")
+#define R(z) printf("(set '" #z " '(");for(i=0;i<sizeof(z)-1;i++) {printf("%d ", z[i]);}; printf("%d))\\n", z[i])
 void cc() {
   int i;
   M(p); M(c); M(f); M(l); M(s); N(s);
@@ -115,8 +118,14 @@ void pl() {
   int i;
   P(p); P(c); P(f); P(l); P(s); N(c);
 }
-void fs(){}
-void ls(){}
+void fs() {
+  int i;
+  Q("py",p); Q("pl",c); Q("fs",f); Q("ls",l); Q("cc",s); N(f);
+}
+void ls(){
+ int i;
+ R(p); R(c); R(f); R(l); R(s); N(l); 
+}
 int main (int argc, char *argv[]) {
 if (argc >= 2 && strcmp(argv[1],"py") == 0) {
   py();
