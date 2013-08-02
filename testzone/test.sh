@@ -1,5 +1,5 @@
-#python dev.py > oracle.py
-python quad_quine_generator.py > oracle.py
+python dev.py > oracle.py
+#python quad_quine_generator.py > oracle.py
 
 python oracle.py > a.py
 echo "python from triquine against itself:"
@@ -64,4 +64,12 @@ newlisp oracle.lsp fs > oracle.fsx
 fsharpi oracle.fsx > a.fsx
 echo "fsharp from newlisp against itself"
 diff oracle.fsx a.fsx
+
+python oracle.py cc > oracle.cc
+gcc -o oracle oracle.cc
+./oracle > a.cc
+echo "c from python against itself"
+diff a.cc oracle.cc
+
+
 
